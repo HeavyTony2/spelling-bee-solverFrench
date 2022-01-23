@@ -6,28 +6,28 @@ async function loadDictionary() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  await loadDictionary()
   const form = document.querySelector('form')
   const list = document.querySelector('ul')
 
-  form.addEventListener('submit', async event => {
+  form.addEventListener('submit', event => {
+    list.innerHTML = ''
     event.preventDefault()
-    await loadDictionary()
 
     const input = new FormData(event.target)
     const { allChars } = Object.fromEntries(input)
-    const lookupTable = allChars.split('').reduce((table, letter) => {
+    const lookupTable = allChars.toLowerCase().split('').reduce((table, letter) => {
       table[letter] = true
       return table
     }, {})
-    console.log(lookupTable)
-    const middleChar = allChars[0]
+    const middleChar = allChars[0].toLowerCase()
     text.split('\n').forEach(word => {
+      const lowerCaseWord = word.toLowerCase()
       if (
-        containsMiddleLetter(middleChar, word) &&
-        allLettersValid(lookupTable, word) &&
+        containsMiddleLetter(middleChar, lowerCaseWord) &&
+        allLettersValid(lookupTable, lowerCaseWord) &&
         word.length >= 4
       ) {
-        console.log(word)
         list.insertAdjacentHTML('beforeend', `<li>${word}</li>`)
       }
     })
