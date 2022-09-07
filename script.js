@@ -1,7 +1,7 @@
 let text
 
 async function loadDictionary() {
-  res = await fetch("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt")
+  res = await fetch("https://raw.githubusercontent.com/Vinetos/french-words-dictionary/master/fr_FR.dic")
   text = await res.text()
 }
 
